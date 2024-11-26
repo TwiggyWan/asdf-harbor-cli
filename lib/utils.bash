@@ -37,29 +37,29 @@ list_all_versions() {
 }
 
 get_platform() {
-    local -r kernel="$(uname -s)"
-    if [[ ${OSTYPE} == "msys" || ${kernel} == "CYGWIN"* || ${kernel} == "MINGW"* ]]; then
-        echo windows
-    else
-        uname | tr '[:upper:]' '[:lower:]'
-    fi
+	local -r kernel="$(uname -s)"
+	if [[ ${OSTYPE} == "msys" || ${kernel} == "CYGWIN"* || ${kernel} == "MINGW"* ]]; then
+		echo windows
+	else
+		uname | tr '[:upper:]' '[:lower:]'
+	fi
 }
 
 get_arch() {
-    # cf https://github.com/asdf-community/asdf-hashicorp/blob/22eb1c4a16adcde39aaaf89fbb5d9404a1601fce/bin/install#L112C1-L128C5
-    local -r machine="$(uname -m)"
-    local -r upper_toolname=$(echo "${toolname//-/_}" | tr '[:lower:]' '[:upper:]')
+	# cf https://github.com/asdf-community/asdf-hashicorp/blob/22eb1c4a16adcde39aaaf89fbb5d9404a1601fce/bin/install#L112C1-L128C5
+	local -r machine="$(uname -m)"
+	local -r upper_toolname=$(echo "${toolname//-/_}" | tr '[:lower:]' '[:upper:]')
 
-    # no need for arch override, harbor-cli already ships arm64 and amd64 for both linux and mac
-    if [[ ${machine} == "arm64" ]] || [[ ${machine} == "aarch64" ]]; then
-        echo "arm64"
-    elif [[ ${machine} == *"arm"* ]] || [[ ${machine} == *"aarch"* ]]; then
-        echo "arm"
-    elif [[ ${machine} == *"386"* ]]; then
-        echo "386"
-    else
-        echo "amd64"
-    fi
+	# no need for arch override, harbor-cli already ships arm64 and amd64 for both linux and mac
+	if [[ ${machine} == "arm64" ]] || [[ ${machine} == "aarch64" ]]; then
+		echo "arm64"
+	elif [[ ${machine} == *"arm"* ]] || [[ ${machine} == *"aarch"* ]]; then
+		echo "arm"
+	elif [[ ${machine} == *"386"* ]]; then
+		echo "386"
+	else
+		echo "amd64"
+	fi
 }
 download_release() {
 	local version filename url
